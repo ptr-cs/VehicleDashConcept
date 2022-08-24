@@ -1,0 +1,407 @@
+﻿<Page x:Class="VehicleDashConcept.UI.DashboardPages.PhonePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:VehicleDashConcept.UI.DashboardPages"
+      xmlns:controls="clr-namespace:VehicleDashConcept.UI.Controls"
+      xmlns:converters="clr-namespace:VehicleDashConcept.UI.Converters"
+      xmlns:viewModel="clr-namespace:VehicleDashConcept.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="200" d:DesignWidth="600"
+      Title="PhonePage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Icons/CustomSvgs.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Icons/IconResources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Styles/DashConceptResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="phoneButton" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="contactsButton" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="callHistoryButton" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="wirelessButton" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="volumeControls" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key0Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key1Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key2Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key3Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key4Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key5Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key6Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key7Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key8Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="Key9Button" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="KeyStarButton" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="KeyPoundButton" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                    <DoubleAnimation Storyboard.TargetName="idleScreen" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+
+                    <DoubleAnimation Storyboard.TargetName="phoneButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.3" BeginTime="0:0:.1" EasingFunction="{StaticResource cubicEase}" />
+                    <DoubleAnimation Storyboard.TargetName="contactsButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.3" BeginTime="0:0:.2" EasingFunction="{StaticResource cubicEase}"/>
+                    <DoubleAnimation Storyboard.TargetName="callHistoryButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.3" BeginTime="0:0:0.3" EasingFunction="{StaticResource cubicEase}"/>
+                    <DoubleAnimation Storyboard.TargetName="wirelessButton" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.3" BeginTime="0:0:0.4" EasingFunction="{StaticResource cubicEase}"/>
+                    <DoubleAnimation Storyboard.TargetName="volumeControls" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:.7" BeginTime="0:0:0.1"/>
+                    <DoubleAnimation Storyboard.TargetName="idleScreen" Storyboard.TargetProperty="Opacity" From="0" To=".25" Duration="0:0:.7" BeginTime="0:0:0.1" />
+
+                    <DoubleAnimation Storyboard.TargetName="Key0Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.5"/>
+                    <DoubleAnimation Storyboard.TargetName="Key1Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.1"/>
+                    <DoubleAnimation Storyboard.TargetName="Key2Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="Key3Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.3"/>
+                    <DoubleAnimation Storyboard.TargetName="Key4Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="Key5Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.3"/>
+                    <DoubleAnimation Storyboard.TargetName="Key6Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.4"/>
+                    <DoubleAnimation Storyboard.TargetName="Key7Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.3"/>
+                    <DoubleAnimation Storyboard.TargetName="Key8Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.4"/>
+                    <DoubleAnimation Storyboard.TargetName="Key9Button" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.5"/>
+                    <DoubleAnimation Storyboard.TargetName="KeyStarButton" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.4"/>
+                    <DoubleAnimation Storyboard.TargetName="KeyPoundButton" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource cubicEase}" BeginTime="0:0:0.6" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush 
+                Opacity=".25"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                ImageSource="pack://application:,,,/VehicleDashConcept;component/UI/Textures/polygon_background.jpg"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Border Height="24" Background="#88000000" />
+        <controls:DashSituationalAwarenessReadout 
+            ContainerFill="Transparent" 
+            Height="24"
+            Width="280" 
+            VerticalAlignment="Top"/>
+        <Border Width="160" Height="24" HorizontalAlignment="Left">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.IDLE}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.INCOMING}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Background" Value="RoyalBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.OUTGOING}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Background" Value="RoyalBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="Background" Value="SeaGreen"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Path 
+                    Margin="4,0"
+                    Height="12"
+                    Style="{StaticResource DashIconsRotated180}"
+                    Data="{StaticResource phone}" />
+                <TextBlock>
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource GenericLabelStyle}">
+                            <Setter Property="Text" Value=""/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.IDLE}">
+                                    <Setter Property="Text" Value=""/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.INCOMING}">
+                                    <Setter Property="Text" Value="Calling: "/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.OUTGOING}">
+                                    <Setter Property="Text" Value="Calling: "/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                                    <Setter Property="Text" Value="Call: "/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock 
+                    Style="{StaticResource GenericLabelStyle}"
+                    Text="Some Contact" />
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel 
+                Orientation="Vertical" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
+                Margin="4,4,0,0">
+                <StackPanel.Effect>
+                    <DropShadowEffect BlurRadius="10" />
+                </StackPanel.Effect>
+                <Button 
+                    x:Name="phoneButton"
+                    Style="{StaticResource secondaryPageButton}">
+                    <Path 
+                        Style="{StaticResource DashIconsRotated180}"
+                        Data="{StaticResource phone}" />
+                </Button>
+                <Button 
+                    x:Name="contactsButton"
+                    Style="{StaticResource secondaryPageButton}" >
+                    <Path 
+                        Style="{StaticResource DashIconsRotated180}"
+                        Data="{StaticResource people}" />
+                </Button>
+                <Button 
+                    x:Name="callHistoryButton"
+                    Style="{StaticResource secondaryPageButton}">
+                    <Path 
+                        Style="{StaticResource DashIconsRotated180}"
+                        Data="{StaticResource history}" />
+                </Button>
+                <Button 
+                    x:Name="wirelessButton">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource secondaryPageButton}">
+                            <Setter Property="Background" Value="#cc000000"/>
+                            <Style.Triggers>
+                                <DataTrigger 
+                                    Binding="{Binding WirelessConnectionState, Mode=OneWay}" 
+                                    Value="{x:Static viewModel:WirelessConnectivity.CONNECTED}">
+                                    <Setter Property="Background" Value="RoyalBlue"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Path 
+                        Style="{StaticResource DashIcons}"
+                        Data="{StaticResource bluetooth}" />
+                </Button>
+                
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" Margin="24,0,0,0">
+                <ContentControl 
+                    x:Name="volumeControls"
+                    Content="{StaticResource volumeControlModule}" 
+                    HorizontalAlignment="Left" />
+                <Grid Margin="4,0" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="160" Grid.Column="2">
+                    <Grid.Effect>
+                        <DropShadowEffect />
+                    </Grid.Effect>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource phoneButton}"/>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource phoneButtonText}"/>
+                        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource phoneButtonLabel}"/>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Key1Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="1">
+                        <Grid>
+                            <TextBlock Text="1"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key2Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="2" Grid.Column="1">
+                        <Grid>
+                            <TextBlock Text="2"/>
+                            <Label Content="A B C"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key3Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="3" Grid.Column="2">
+                        <Grid>
+                            <TextBlock Text="3"/>
+                            <Label Content="D E F"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key4Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="4" Grid.Row="1">
+                        <Grid>
+                            <TextBlock Text="4"/>
+                            <Label Content="G H I"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key5Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="5" Grid.Row="1" Grid.Column="1">
+                        <Grid>
+                            <TextBlock Text="5"/>
+                            <Label Content="J K L"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key6Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="6" Grid.Row="1" Grid.Column="2">
+                        <Grid>
+                            <TextBlock Text="6"/>
+                            <Label Content="M N O"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key7Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="7" Grid.Row="2">
+                        <Grid>
+                            <TextBlock Text="7"/>
+                            <Label Content="P Q R S"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key8Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="8" Grid.Row="2" Grid.Column="1">
+                        <Grid>
+                            <TextBlock Text="8"/>
+                            <Label Content="T U V"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="Key9Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="9" Grid.Row="2" Grid.Column="2">
+                        <Grid>
+                            <TextBlock Text="9"/>
+                            <Label Content="W X Y Z"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="KeyStarButton" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="*" Grid.Row="3">
+                        <TextBlock Text="*" Margin="0" FontSize="24"/>
+                    </Button>
+                    <Button x:Name="Key0Button" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="0" Grid.Row="3" Grid.Column="1">
+                        <Grid>
+                            <TextBlock Text="0"/>
+                            <Label Content="+" FontSize="12"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="KeyPoundButton" Command="{Binding PhoneViewModel.KeypadEntry}" CommandParameter="#" Grid.Row="3" Grid.Column="2">
+                        <TextBlock Text="#" Margin="0" FontSize="20"/>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <Grid Grid.Column="2">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush>
+                                    <GradientStop Color="RoyalBlue" Offset="0" />
+                                    <GradientStop Color="CadetBlue" Offset="1" />
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush>
+                                            <GradientStop Color="SeaGreen" Offset="0" />
+                                            <GradientStop Color="DarkTurquoise" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <StackPanel Orientation="Vertical" Opacity=".25" VerticalAlignment="Center" x:Name="idleScreen">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PhoneViewModel.PhoneNumberEntry}" Value="">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <Path 
+                        Height="48"
+                        Width="48"
+                        Stroke="Black"
+                        Fill="Black"
+                        StrokeThickness="1.5"
+                        Data="{StaticResource phone}" 
+                        Margin="2"
+                        Stretch="Uniform" 
+                        Style="{StaticResource DashIconsRotated180}" />
+                    <TextBlock 
+                        Text="idle." 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="Bold" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,4,0,0">
+                    <StackPanel.Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PhoneViewModel.PhoneNumberEntry}" Value="">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Style="{StaticResource phoneCommunicationStateLabel}"/>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        <TextBox 
+                            Style="{StaticResource phoneNumberEntryTextBox}"
+                            Text="{Binding PhoneViewModel.PhoneNumberEntryDisplayString, Mode=OneWay}"/>
+                        <ContentControl Content="{StaticResource phoneNumberEntryDeleteButton}" />
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button 
+                            Width="110"
+                            Height="28">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource phoneButton}">
+                                    <Setter Property="Command" Value="{Binding PhoneViewModel.DialPhoneNumber}"/>
+                                    <Setter Property="Tag" Value="D I A L"/>
+                                    <Setter Property="BorderBrush" Value="DarkGreen"/>
+                                    <Setter Property="Background" Value="SpringGreen"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                                            <Setter Property="Command" Value="{Binding PhoneViewModel.HangUpPhone}"/>
+                                            <Setter Property="Tag" Value="E N D"/>
+                                            <Setter Property="BorderBrush" Value="Red"/>
+                                            <Setter Property="Background" Value="Firebrick"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.INCOMING}">
+                                            <Setter Property="Command" Value="{Binding PhoneViewModel.HangUpPhone}"/>
+                                            <Setter Property="Tag" Value="E N D"/>
+                                            <Setter Property="BorderBrush" Value="Red"/>
+                                            <Setter Property="Background" Value="Firebrick"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.OUTGOING}">
+                                            <Setter Property="Command" Value="{Binding PhoneViewModel.HangUpPhone}"/>
+                                            <Setter Property="Tag" Value="E N D"/>
+                                            <Setter Property="BorderBrush" Value="Red"/>
+                                            <Setter Property="Background" Value="Firebrick"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <Path 
+                                Stroke="Black"
+                                StrokeThickness="1.5"
+                                Data="{StaticResource phone}" 
+                                Margin="2"
+                                Height="Auto"
+                                Stretch="Uniform" 
+                                Style="{StaticResource DashIconsRotated180}" />
+                        </Button>
+
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource phoneCallDurationText}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

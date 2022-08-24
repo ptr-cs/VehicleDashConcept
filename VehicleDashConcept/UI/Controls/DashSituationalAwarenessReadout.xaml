@@ -1,0 +1,175 @@
+﻿<UserControl x:Class="VehicleDashConcept.UI.Controls.DashSituationalAwarenessReadout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VehicleDashConcept.UI.Controls"
+             xmlns:viewModel="clr-namespace:VehicleDashConcept.ViewModel"
+             mc:Ignorable="d" 
+             x:Name="Control"
+             d:DesignHeight="24" d:DesignWidth="280">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Icons/CustomSvgs.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Icons/IconResources.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Styles/DashConceptResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Polygon Fill="{Binding ContainerFill, ElementName=Control, Mode=OneWay}" Stretch="UniformToFill">
+            <Polygon.Points>
+                <Point X="0" Y="0"/>
+                <Point X="1" Y="0"/>
+                <Point X="1" Y="1"/>
+            </Polygon.Points>
+        </Polygon>
+        <Polygon Grid.Column="1" Fill="{Binding ContainerFill, ElementName=Control, Mode=OneWay}" Stretch="Fill">
+            <Polygon.Points>
+                <Point X="0" Y="0"/>
+                <Point X="1" Y="0"/>
+                <Point X="1" Y="1"/>
+                <Point X="0" Y="1"/>
+            </Polygon.Points>
+        </Polygon>
+        <Polygon Grid.Column="2" Fill="{Binding ContainerFill, ElementName=Control, Mode=OneWay}" Stretch="UniformToFill">
+            <Polygon.Points>
+                <Point X="0" Y="0"/>
+                <Point X="0" Y="1"/>
+                <Point X="1" Y="0"/>
+            </Polygon.Points>
+        </Polygon>
+
+        <Grid Grid.Column="1">
+            <TextBlock 
+                        HorizontalAlignment="Right"
+                        Text="5:10 PM" 
+                        Margin="0"
+                        Style="{StaticResource DialLabelStyle}"
+                        VerticalAlignment="Center"/>
+
+            <TextBlock 
+                        HorizontalAlignment="Left"
+                        Text="70° F" 
+                        Margin="0"
+                        Style="{StaticResource DialLabelStyle}"
+                        VerticalAlignment="Center"/>
+
+            <Path 
+                HorizontalAlignment="Left"
+                Margin="48,0,0,0"
+                Data="{StaticResource BluetoothIndicator}">
+                <Path.Style>
+                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                        <Setter Property="Fill" Value="#444"/>
+                        <Style.Triggers>
+                            <DataTrigger 
+                                    Binding="{Binding WirelessConnectionState, Mode=OneWay}" 
+                                    Value="{x:Static viewModel:WirelessConnectivity.CONNECTED}">
+                                <Setter Property="Fill" Value="#30acff"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#30acff" BlurRadius="8" ShadowDepth="0" />
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+
+            <Grid Width="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Path Data="{StaticResource Alpha-P}">
+                    <Path.Style>
+                        <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                            <Style.Triggers>
+                                <DataTrigger 
+                                    Binding="{Binding DriverViewModel.TransmissionState, Mode=OneWay}" 
+                                    Value="{x:Static viewModel:TransmissionState.PARK}">
+                                    <Setter Property="Fill" Value="Red"/>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="Red" BlurRadius="8" ShadowDepth="0" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+                <Path 
+                    Grid.Column="1"
+                    Data="{StaticResource Alpha-R}">
+                    <Path.Style>
+                        <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                            <Style.Triggers>
+                                <DataTrigger 
+                                    Binding="{Binding DriverViewModel.TransmissionState, Mode=OneWay}" 
+                                    Value="{x:Static viewModel:TransmissionState.REVERSE}">
+                                    <Setter Property="Fill" Value="Orange"/>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="Orange" BlurRadius="8" ShadowDepth="0" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+                <Path 
+                            Grid.Column="2"
+                            Data="{StaticResource Alpha-N}">
+                    <Path.Style>
+                        <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                            <Style.Triggers>
+                                <DataTrigger 
+                                    Binding="{Binding DriverViewModel.TransmissionState, Mode=OneWay}" 
+                                    Value="{x:Static viewModel:TransmissionState.NEUTRAL}">
+                                    <Setter Property="Fill" Value="RoyalBlue"/>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="RoyalBlue" BlurRadius="8" ShadowDepth="0" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+                <Path
+                            Grid.Column="3"
+                            Data="{StaticResource Alpha-D}">
+                    <Path.Style>
+                        <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                            <Style.Triggers>
+                                <DataTrigger 
+                                    Binding="{Binding DriverViewModel.TransmissionState, Mode=OneWay}" 
+                                    Value="{x:Static viewModel:TransmissionState.DRIVE}">
+                                    <Setter Property="Fill" Value="SpringGreen"/>
+                                    <Setter Property="Effect">
+                                        <Setter.Value>
+                                            <DropShadowEffect Color="SpringGreen" BlurRadius="8" ShadowDepth="0" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

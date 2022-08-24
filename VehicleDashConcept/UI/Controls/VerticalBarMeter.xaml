@@ -1,0 +1,41 @@
+﻿<local:BarMeter x:Class="VehicleDashConcept.UI.Controls.VerticalBarMeter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VehicleDashConcept.UI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400"
+             x:Name="control">
+    <Grid RenderTransformOrigin=".5,.5">
+        <Grid.RenderTransform>
+            <RotateTransform Angle="180"/>
+        </Grid.RenderTransform>
+        <Grid x:Name="meterBackgroundOpactiyMask"/>
+        <Grid x:Name="meterFillOpactiyMask"/>
+        <Border x:Name="meterFill" Background="{Binding MeterFill, ElementName=control, Mode=OneWay}">
+            <Border.OpacityMask>
+                <VisualBrush 
+                    Visual="{Binding ElementName=meterFillOpactiyMask}" Stretch="None"/>
+            </Border.OpacityMask>
+        </Border>
+        
+        <Grid Background="{Binding MeterBackground, ElementName=control, Mode=OneWay}">
+            <Grid.OpacityMask>
+                <VisualBrush 
+                    Visual="{Binding ElementName=meterBackgroundOpactiyMask}" Stretch="None"/>
+            </Grid.OpacityMask>
+        </Grid>
+        <Grid x:Name="barContainer" />
+        <Border>
+            <Border.Background>
+                <VisualBrush Visual="{Binding ElementName=meterFill}" Stretch="None" />
+            </Border.Background>
+            <Border.Effect>
+                <BlurEffect Radius="5"/>
+            </Border.Effect>
+        </Border>
+    </Grid>
+    
+
+</local:BarMeter>

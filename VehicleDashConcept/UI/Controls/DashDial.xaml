@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="VehicleDashConcept.UI.Controls.DashDial"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VehicleDashConcept.UI.Controls"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d"
+             d:DesignWidth="160"
+             x:Name="Dial">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Icons/CustomSvgs.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Styles/DashConceptResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Template>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            
+            <Grid>
+                <Grid.Resources>
+                    <RotateTransform x:Key="RotateResource" Angle="{Binding Path=Value, ElementName=Dial}"/>
+                </Grid.Resources>
+                <Path 
+            Data="{StaticResource Circle-svg}" 
+            Stretch="Uniform" 
+            Stroke="{Binding BezelOuterStroke, FallbackValue=Black, ElementName=Dial}" 
+            StrokeThickness="{Binding BezelOuterStrokeThickness, FallbackValue=1, ElementName=Dial}" 
+            Fill="{Binding BezelOuterFill, FallbackValue=White, ElementName=Dial}" />
+
+                <Path 
+            Data="{StaticResource Circle-svg}" 
+            Stretch="Uniform" 
+            Margin="{Binding BezelInnerMargin, FallbackValue=10, ElementName=Dial}"
+            Stroke="{Binding BezelInnerStroke, FallbackValue=Black, ElementName=Dial}" 
+            StrokeThickness="{Binding BezelInnerStrokeThickness, FallbackValue=1, ElementName=Dial}" 
+            Fill="{Binding BezelInnerFill, FallbackValue=White, ElementName=Dial}"/>
+
+                <Path 
+            Data="{StaticResource Circle-svg}" 
+            Stretch="Uniform" 
+            Margin="{Binding FaceplateMargin, FallbackValue=24, ElementName=Dial}"
+            Stroke="{Binding FaceplateStroke, FallbackValue=Black, ElementName=Dial}" 
+            StrokeThickness="{Binding FaceplateStrokeThickness, FallbackValue=1, ElementName=Dial}" 
+            Fill="{Binding FaceplateFill, FallbackValue=White, ElementName=Dial}"/>
+
+                <ContentPresenter />
+
+                <Path 
+            Data="{StaticResource Circle-svg}" 
+            Stretch="Uniform" 
+            Width="{Binding NeedleHousingWidth, FallbackValue=20, ElementName=Dial}"
+            Stroke="{Binding NeedleHousingStroke, FallbackValue=Black, ElementName=Dial}" 
+            StrokeThickness="{Binding NeedleHousingStrokeThickness, FallbackValue=1, ElementName=Dial}" 
+            Fill="{Binding NeedleHousingFill, FallbackValue=White, ElementName=Dial}"/>
+
+                <Path 
+            Data="{StaticResource Circle-svg}" 
+            Stretch="Uniform" 
+            Width="{Binding NeedleCapWidth, FallbackValue=6, ElementName=Dial}"
+            Stroke="{Binding NeedleCapStroke, FallbackValue=Black, ElementName=Dial}" 
+            StrokeThickness="{Binding NeedleCapStrokeThickness, FallbackValue=1, ElementName=Dial}" 
+            Fill="{Binding NeedleCapFill, FallbackValue=White, ElementName=Dial}">
+                </Path>
+
+                <Rectangle 
+                    Height="{Binding NeedleHeight, FallbackValue=60, ElementName=Dial}" 
+                    Margin="{Binding NeedleMargin, FallbackValue='0,60,0,0', ElementName=Dial}"
+                    Width="{Binding NeedleWidth, FallbackValue=4, ElementName=Dial}" 
+                    Stroke="{Binding NeedleStroke, FallbackValue=Black, ElementName=Dial}" 
+                    StrokeThickness="{Binding NeedleStrokeThickness, FallbackValue=1, ElementName=Dial}" 
+                    Fill="{Binding NeedleFill, FallbackValue=White, ElementName=Dial}" 
+                    VerticalAlignment="Center"
+                    RadiusX="8"
+                    RadiusY="8"
+                    RenderTransformOrigin="0.5,0">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="{Binding Source={StaticResource RotateResource}, Path=Angle, Mode=OneWay, FallbackValue=0.0}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+            </Grid>
+            
+        </ControlTemplate>
+    </UserControl.Template>
+    
+</UserControl>

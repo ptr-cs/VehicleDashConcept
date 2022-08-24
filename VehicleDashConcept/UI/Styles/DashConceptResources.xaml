@@ -1,0 +1,1036 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:VehicleDashConcept.UI.Controls"
+                    xmlns:converters="clr-namespace:VehicleDashConcept.UI.Converters"
+                    xmlns:viewModel="clr-namespace:VehicleDashConcept.ViewModel">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/VehicleDashConcept;component/UI/Icons/IconResources.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <converters:VolumeReadoutConverter x:Key="volumeReadoutConverter"/>
+    <converters:VolumeMeterAdjustedConverter x:Key="volumeMeterAdjustedConverter"/>
+    <converters:TimeSpanToStringConverter x:Key="timeSpanToStringConverter"/>
+    <converters:TextToSpacedTextConverter x:Key="textToSpacedTextConverter" />
+    <converters:FuelDialConverter x:Key="fuelDialConverter" />
+    <converters:SpeedDialConverter x:Key="speedDialConverter"/>
+    <converters:RevDialConverter x:Key="revDialConverter"/>
+
+    <CubicEase x:Key="cubicEase" EasingMode="EaseOut"/>
+
+    <SolidColorBrush x:Key="GenericLabelBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="DialBrushDarkest" Color="#111"/>
+    <SolidColorBrush x:Key="DialBrushDarker" Color="#222"/>
+    <SolidColorBrush x:Key="DialBrushDark" Color="#333"/>
+    <SolidColorBrush x:Key="DialLabelBrush" Color="{Binding Mode=OneWay, Source={StaticResource GenericLabelBrush}, Path=Color, FallbackValue=White}"/>
+
+    <LinearGradientBrush x:Key="DialNeedleBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="DarkRed"/>
+        <GradientStop Offset="1" Color="Red"/>
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="DialBezelOuterBrush" RadiusX="1" RadiusY="1"  Center="0.5,0.5">
+        <GradientStop Color="#666" Offset="0.45"/>
+        <GradientStop Color="Black" Offset=".5"/>
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="DialNeedleHousingBrush" Center="0.5,0.5">
+        <GradientStop Color="Silver" Offset="0"/>
+        <GradientStop Color="#444" Offset="1"/>
+    </RadialGradientBrush>
+
+    <ImageBrush 
+        x:Key="CarbonFiberBrush"
+        Stretch="None"
+        Opacity="1"
+        AlignmentX="Left"
+        ImageSource="pack://application:,,,/VehicleDashConcept;component/UI/Textures/carbon.jpg"/>
+
+    <LinearGradientBrush x:Key="DialTickMarkersGradient" StartPoint="0,0" EndPoint="1,1" >
+        <GradientStop Offset="0" Color="White"/>
+        <GradientStop Offset=".5" Color="White"/>
+        <GradientStop Offset=".75" Color="Red"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="DialTickMarkersGradientRightToLeft" StartPoint="0,0" EndPoint="1,0" >
+        <GradientStop Offset="0" Color="Red"/>
+        <GradientStop Offset=".5" Color="White"/>
+        <GradientStop Offset=".75" Color="White"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="DialTickMarkersGradientLeftToRight" StartPoint="1,0" EndPoint="0,0" >
+        <GradientStop Offset="0" Color="Red"/>
+        <GradientStop Offset=".5" Color="White"/>
+        <GradientStop Offset=".75" Color="White"/>
+    </LinearGradientBrush>
+
+    <VisualBrush x:Key="DialTickMarkersOpacityMask">
+        <VisualBrush.Visual>
+            <Polygon Margin="12" Fill="Black" StrokeThickness="1" Stretch="Uniform">
+                <Polygon.Points>
+                    <Point X="0" Y="0"/>
+                    <Point X="0" Y="8"/>
+                    <Point X="4" Y="4"/>
+                    <Point X="8" Y="8"/>
+                    <Point X="8" Y="0"/>
+                </Polygon.Points>
+            </Polygon>
+        </VisualBrush.Visual>
+    </VisualBrush>
+
+    <Style x:Key="GenericLabelStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Foreground" Value="{StaticResource GenericLabelBrush}"/>
+    </Style>
+
+    <Style x:Key="DialLabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource GenericLabelStyle}">
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="Margin" Value="0,0,0,16"/>
+    </Style>
+
+    <Style x:Key="DialDashes" TargetType="{x:Type Rectangle}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="RenderTransformOrigin" Value=".5, .5"/>
+        <Setter Property="Height" Value="4"/>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Fill" Value="{StaticResource GenericLabelBrush}"/>
+        <Setter Property="Stroke" Value="Black"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+    </Style>
+
+    <Style x:Key="DialPathNumbersMajor" TargetType="{x:Type Path}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Height" Value="10"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="Fill" Value="{StaticResource GenericLabelBrush}"/>
+    </Style>
+
+    <Style x:Key="DialPathNumbersRevCounter" TargetType="{x:Type Path}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="Fill" Value="{StaticResource GenericLabelBrush}"/>
+    </Style>
+
+    <Style x:Key="DialStyle" TargetType="{x:Type controls:DashDial}">
+        <Setter Property="Height" Value="160" />
+        <Setter Property="Margin" Value="10,0" />
+        <Setter Property="BezelOuterStroke" Value="{StaticResource DialBrushDarkest}" />
+        <Setter Property="BezelOuterStrokeThickness" Value="2" />
+        <Setter Property="BezelOuterFill" Value="{StaticResource DialBezelOuterBrush}" />
+        <Setter Property="BezelInnerMargin" Value="10" />
+        <Setter Property="BezelInnerFill" Value="{StaticResource DialBrushDarker}" />
+        <Setter Property="BezelInnerStroke" Value="{StaticResource DialBrushDarkest}" />
+        <Setter Property="BezelInnerStrokeThickness" Value="2" />
+        <Setter Property="FaceplateMargin" Value="24" />
+        <Setter Property="FaceplateStroke" Value="{StaticResource DialBrushDarkest}" />
+        <Setter Property="FaceplateStrokeThickness" Value="1" />
+        <Setter Property="FaceplateFill" Value="{StaticResource CarbonFiberBrush}" />
+        <Setter Property="NeedleHousingStroke" Value="{StaticResource DialBrushDarkest}" />
+        <Setter Property="NeedleHousingStrokeThickness" Value="1" />
+        <Setter Property="NeedleHousingWidth" Value="20" />
+        <Setter Property="NeedleHousingFill" Value="{StaticResource DialNeedleHousingBrush}" />
+        <Setter Property="NeedleCapFill" Value="{StaticResource DialBrushDark}" />
+        <Setter Property="NeedleCapStroke" Value="{StaticResource DialBrushDarkest}" />
+        <Setter Property="NeedleCapStrokeThickness" Value="1" />
+        <Setter Property="NeedleCapWidth" Value="6" />
+        <Setter Property="NeedleHeight" Value="60" />
+        <Setter Property="NeedleWidth" Value="4" />
+        <Setter Property="NeedleStroke" Value="Black" />
+        <Setter Property="NeedleStrokeThickness" Value="1" />
+        <Setter Property="NeedleMargin" Value="0,60,0,0" />
+        <Setter Property="NeedleFill" Value="{StaticResource DialNeedleBrush}" />
+        <Setter Property="Value" Value="45" />
+    </Style>
+
+    <Style TargetType="{x:Type Path}" x:Key="DashIcons">
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Fill" Value="{StaticResource GenericLabelBrush}"/>
+    </Style>
+
+    <Style TargetType="{x:Type Border}" x:Key="WarningIndicatorBorder">
+        <Setter Property="Background" Value="#88000000"/>
+        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Cursor" Value="Help"/>
+        <Setter Property="CornerRadius" Value="5"/>
+    </Style>
+
+    <Style TargetType="{x:Type Path}" x:Key="DashIconsRotated180" BasedOn="{StaticResource IconRotated180}">
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="Height" Value="16"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Fill" Value="{StaticResource GenericLabelBrush}"/>
+    </Style>
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+    <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+    <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+    <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+    <Style x:Key="DashButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="#88000000"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                                    Storyboard.TargetName="TagToolTip"
+                                                    Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.4"
+                                                    BeginTime="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="fxBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleX)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleY)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border 
+                                x:Name="border" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter 
+                                        RenderTransformOrigin=".5,.5"
+                                    x:Name="contentPresenter" 
+                                    Focusable="False" 
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}" 
+                                    RecognizesAccessKey="True" 
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.RenderTransform>
+                                    <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Border>
+                        <TextBlock 
+                            x:Name="TagToolTip"
+                            Opacity="0"
+                            Text="{TemplateBinding Tag}"
+                            Style="{StaticResource DialLabelStyle}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8,0"
+                            FontSize="8"/>
+                        <Border x:Name="fxBorder">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" Opacity="0">
+                                    <GradientStop Color="#00000000" Offset="0"/>
+                                    <GradientStop Color="#88000000" Offset=".5"/>
+                                    <GradientStop Color="#00000000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DashButtonRadialHighlight" TargetType="{x:Type Button}" BasedOn="{StaticResource DashButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                                    Storyboard.TargetName="TagToolTip"
+                                                    Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.4"
+                                                    BeginTime="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="fxBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleX)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleY)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border 
+                                x:Name="border" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter 
+                                        RenderTransformOrigin=".5,.5"
+                                    x:Name="contentPresenter" 
+                                    Focusable="False" 
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}" 
+                                    RecognizesAccessKey="True" 
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.RenderTransform>
+                                    <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Border>
+                        <TextBlock 
+                            x:Name="TagToolTip"
+                            Opacity="0"
+                            Text="{TemplateBinding Tag}"
+                            Style="{StaticResource DialLabelStyle}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8,0"
+                            FontSize="8"/>
+                        <Border x:Name="fxBorder">
+                            <Border.Background>
+                                <RadialGradientBrush GradientOrigin="0.5,0.5" Opacity="0">
+                                    <GradientStop Color="#88000000" Offset="0"/>
+                                    <GradientStop Color="#00000000" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="mainMenuDashButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DashButtonRadialHighlight}">
+        <Setter Property="BorderBrush" Value="GhostWhite"/>
+        <Setter Property="RenderTransformOrigin" Value=".5,.5"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1" ScaleY="1"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="SkyBlue" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                                    Storyboard.TargetName="TagToolTip"
+                                                    Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.4"
+                                                    BeginTime="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="fxBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleX)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleY)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border Tag="fake shadow" Background="Black" Margin="0,0,-5,-5">
+                            <Border.Effect>
+                                <BlurEffect Radius="8" />
+                            </Border.Effect>
+                        </Border>
+                        <Border 
+                            x:Name="border" 
+                            CornerRadius="5"
+                            ClipToBounds="True"
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="true">
+                            <ContentPresenter 
+                                    RenderTransformOrigin=".5,.5"
+                                    x:Name="contentPresenter" 
+                                    Focusable="False" 
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}" 
+                                    RecognizesAccessKey="True" 
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.RenderTransform>
+                                    <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Border>
+                        <TextBlock 
+                            x:Name="TagToolTip"
+                            Opacity="0"
+                            Text="{TemplateBinding Tag}"
+                            Style="{StaticResource DialLabelStyle}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8,0"
+                            FontSize="8"/>
+                        <Border x:Name="fxBorder">
+                            <Border.Background>
+                                <RadialGradientBrush GradientOrigin="0.5,0.5" Opacity="0">
+                                    <GradientStop Color="#88000000" Offset="0"/>
+                                    <GradientStop Color="#00000000" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+    <Style x:Key="BaseButtonStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="#88000000"/>
+        <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                                    Storyboard.TargetName="TagToolTip"
+                                                    Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.4"
+                                                    BeginTime="0:0:0.4">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseIn"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    To="#2980b9" 
+                                                    Duration="0:0:0.2" />
+                                        <ColorAnimation 
+                                                    Storyboard.TargetName="border" 
+                                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                    To="#bdc3c7" 
+                                                    Duration="0:0:0.2" />
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="fxBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.Opacity)"
+                                                    To=".75"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleX)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                        <DoubleAnimation 
+                                                    Storyboard.TargetName="contentPresenter"
+                                                    Storyboard.TargetProperty="(ContentPresenter.RenderTransform).(ScaleTransform.ScaleY)"
+                                                    To=".9"
+                                                    Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border 
+                                x:Name="border" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" 
+                                SnapsToDevicePixels="true">
+                            <ContentPresenter 
+                                        RenderTransformOrigin=".5,.5"
+                                    x:Name="contentPresenter" 
+                                    Focusable="False" 
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    Margin="{TemplateBinding Padding}" 
+                                    RecognizesAccessKey="True" 
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.RenderTransform>
+                                    <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Border>
+                        <TextBlock 
+                            x:Name="TagToolTip"
+                            Opacity="0"
+                            Text="{TemplateBinding Tag}"
+                            Style="{StaticResource DialLabelStyle}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="8,0"
+                            FontSize="8"/>
+                        <Border x:Name="fxBorder">
+                            <Border.Background>
+                                <RadialGradientBrush GradientOrigin="0.5,0.5" Opacity="0">
+                                    <GradientStop Color="#88000000" Offset="0"/>
+                                    <GradientStop Color="#00000000" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="testingTextLabel" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="Thin"/>
+        <Setter Property="Foreground" Value="GhostWhite"/>
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
+    <Style x:Key="testingButtonBaseStyle" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource BaseButtonStyle}">
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Foreground" Value="GhostWhite"/>
+        <Setter Property="TextElement.FontWeight" Value="Thin"/>
+        <Setter Property="TextElement.FontSize" Value="18"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Margin" Value="4,0"/>
+    </Style>
+
+    <Style x:Key="DashRepeatButton" BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type RepeatButton}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+    </Style>
+
+    <Style x:Key="phoneButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DashButtonRadialHighlight}">
+        <Setter Property="Margin" Value="4"/>
+    </Style>
+
+    <Style x:Key="phoneButtonText" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="Sans Serif"/>
+        <Setter Property="FontWeight" Value="Black"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="Foreground" Value="{StaticResource GenericLabelBrush}"/>
+        <Setter Property="Margin" Value="0,-8,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="phoneButtonLabel" TargetType="{x:Type Label}">
+        <Setter Property="FontFamily" Value="Sans Serif"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Margin" Value="0,0,0,-12"/>
+        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="Foreground" Value="{StaticResource GenericLabelBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+    </Style>
+
+    <Style x:Key="phoneNumberEntryTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="IsReadOnlyCaretVisible" Value="True"/>
+        <Setter Property="Margin" Value="0,4"/>
+        <Setter Property="Foreground" Value="{StaticResource GenericLabelBrush}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="19"/>
+        <Setter Property="FontFamily" Value="Sans Serif"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
+    <Button 
+        x:Key="phoneNumberEntryDeleteButton"
+        x:Shared="False"
+        HorizontalAlignment="Right"
+        Width="32"
+        Margin="16,0"
+        Command="{Binding PhoneViewModel.RemoveFromKeypadEntry}"
+        Height="28"
+        Background="Transparent"
+        BorderThickness="0">
+        <Button.Style>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource phoneButton}">
+                <Setter Property="Visibility" Value="Visible"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.OUTGOING}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.INCOMING}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Button.Style>
+        <Path 
+            Stroke="Black"
+            Fill="White"
+            StrokeThickness="1.5"
+            Data="{StaticResource cancel}" 
+            Margin="2"
+            Height="Auto"
+            Stretch="Uniform" 
+            Style="{StaticResource DashIconsRotated180}" />
+    </Button>
+
+    <Style 
+        x:Key="phoneCommunicationStateLabel" 
+        TargetType="{x:Type TextBlock}" 
+        BasedOn="{StaticResource phoneButtonText}">
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Text" Value="Dial:" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                <Setter Property="Text" Value="Connected:" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.OUTGOING}">
+                <Setter Property="Text" Value="Dialing..." />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.INCOMING}">
+                <Setter Property="Text" Value="Incoming:" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style 
+        x:Key="phoneCallDurationText" 
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Visibility" Value="Collapsed"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource GenericLabelBrush}"/>
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Text" Value="{Binding PhoneViewModel.CurrentPhoneCallDuration, Mode=OneWay, Converter={StaticResource timeSpanToStringConverter},FallbackValue=0:00}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding PhoneViewModel.PhoneState, Mode=OneWay}" Value="{x:Static viewModel:PhoneCommunicationState.ACTIVE}">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style 
+        x:Key="secondaryPageButton"
+        TargetType="{x:Type Button}" 
+        BasedOn="{StaticResource DashButtonRadialHighlight}">
+        <Setter Property="Margin" Value="0,0,0,4"/>
+        <Setter Property="Background" Value="#cc000000"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+    <Grid 
+        x:Key="volumeControlModule"
+        x:Shared="false">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel 
+            Orientation="Vertical" 
+            VerticalAlignment="Top">
+            <StackPanel.Effect>
+                <DropShadowEffect BlurRadius="10" RenderingBias="Performance" />
+            </StackPanel.Effect>
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource DashRepeatButton}">
+                    <Setter Property="Width" Value="32"/>
+                    <Setter Property="Height" Value="52"/>
+                    <Setter Property="Background" Value="#cc000000"/>
+                    <Setter Property="Interval" Value="100"/>
+                </Style>
+            </StackPanel.Resources>
+            <RepeatButton 
+                Margin="4"
+                Command="{Binding IncreaseVolume}">
+                <Path 
+                    Style="{StaticResource DashIcons}"
+                    Data="{StaticResource volume_up}" />
+            </RepeatButton>
+            <RepeatButton 
+                Command="{Binding DecreaseVolume}">
+                <Path 
+                    Style="{StaticResource DashIcons}"
+                    Data="{StaticResource volume_down}" />
+            </RepeatButton>
+            <TextBlock 
+                Text="V O L" 
+                FontWeight="Thin" 
+                Margin="0,4,0,0" 
+                FontSize="16" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" 
+                Foreground="{StaticResource GenericLabelBrush}"/>
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <controls:VerticalBarMeter 
+                Maximum="100"
+                Width="28"
+                Bars="10"
+                Margin="0,4,0,0"
+                Value="{Binding AudioVolume, FallbackValue=50, Mode=OneWay}"
+                BarMargin="2"
+                Height="108">
+                <controls:VerticalBarMeter.MeterFill>
+                    <LinearGradientBrush>
+                        <GradientStop Color="DarkOliveGreen" Offset="0" />
+                        <GradientStop Color="SpringGreen" Offset="1" />
+                    </LinearGradientBrush>
+                </controls:VerticalBarMeter.MeterFill>
+            </controls:VerticalBarMeter>
+            <TextBlock 
+                Grid.Row="1" 
+                Margin="0,4,0,0" 
+                Text="{Binding AudioVolume, FallbackValue=50, Mode=OneWay}" 
+                FontSize="16" 
+                FontWeight="Bold" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                Foreground="{StaticResource GenericLabelBrush}"/>
+        </Grid>
+    </Grid>
+
+    <Border 
+        x:Key="seatBeltIndicatorModule"
+        x:Shared="False"
+        Style="{StaticResource WarningIndicatorBorder}" 
+        ToolTip="Driver Seatbelt">
+        <Path 
+            Height="Auto"
+            Margin="3"
+            Data="{StaticResource SeatbeltWarning}">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                    <Setter Property="Fill" Value="#444"/>
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DriverViewModel.SeatBeltIndicatorState, Mode=OneWay}" 
+                            Value="True">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="OrangeRed" BlurRadius="8" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
+    </Border>
+    <Border 
+        Style="{StaticResource WarningIndicatorBorder}" 
+        x:Key="highBeamsIndicatorModule"
+        x:Shared="False"
+        ToolTip="High Beams">
+        <Path 
+            Grid.Column="1"
+            Height="Auto"
+            Margin="3"
+            Data="{StaticResource HighBeamsIndicator}">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIconsRotated180}">
+                    <Setter Property="Fill" Value="#444"/>
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DriverViewModel.HighBeamsIndicatorState, Mode=OneWay}" 
+                            Value="True">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="OrangeRed" BlurRadius="8" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
+    </Border>
+    <Border 
+        Style="{StaticResource WarningIndicatorBorder}" 
+        x:Key="airBagIndicatorModule"
+        x:Shared="false"
+        ToolTip="Airbags">
+        <Path 
+            Grid.Column="2"
+            Data="{StaticResource AirbagIndicator}"
+            Height="Auto"
+            Margin="4">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                    <Setter Property="Fill" Value="#444"/>
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DriverViewModel.AirBagsIndicatorState, Mode=OneWay}" 
+                            Value="True">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="OrangeRed" BlurRadius="8" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
+    </Border>
+
+    <Border 
+        x:Key="tirePressureIndicatorModule"
+        x:Shared="false"
+        Style="{StaticResource WarningIndicatorBorder}" 
+        ToolTip="Low Tire Pressure">
+        <Path 
+            Height="Auto"
+            Margin="3"
+            Data="{StaticResource TirePressureWarning}">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                    <Setter Property="Fill" Value="#444"/>
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DriverViewModel.TirePressureIndicatorState, Mode=OneWay}" 
+                            Value="True">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="OrangeRed" BlurRadius="8" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
+    </Border>
+
+    <Border 
+        x:Key="hazardLightsIndicatorModule" 
+        x:Shared="false"
+        Style="{StaticResource WarningIndicatorBorder}" 
+        ToolTip="Hazard Lights">
+        <Path 
+            Height="Auto"
+            Margin="3"
+            Data="{StaticResource HazardLightsIndicator}">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                    <Setter Property="Fill" Value="#444"/>
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DriverViewModel.HazardLightsIndicatorState, Mode=OneWay}" 
+                            Value="True">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="OrangeRed" BlurRadius="8" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
+    </Border>
+
+    <Border 
+        x:Key="brakeWarningIndicatorModule" 
+        x:Shared="false"
+        Style="{StaticResource WarningIndicatorBorder}" 
+        ToolTip="Low Brake Fluid">
+        <Path 
+            Height="Auto"
+            Margin="3"
+            Data="{StaticResource BrakesWarning}">
+            <Path.Style>
+                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DashIcons}">
+                    <Setter Property="Fill" Value="#444"/>
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DriverViewModel.BrakeFluidIndicatorState, Mode=OneWay}" 
+                            Value="True">
+                            <Setter Property="Fill" Value="Red"/>
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="OrangeRed" BlurRadius="8" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Path.Style>
+        </Path>
+    </Border>
+</ResourceDictionary>
