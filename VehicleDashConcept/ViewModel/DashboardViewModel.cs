@@ -162,7 +162,7 @@ namespace VehicleDashConcept.ViewModel
         System.Timers.Timer PhoneDialTimer { get; set; }
         System.Timers.Timer PhoneConnectedTimer { get; set; }
 
-        DashboardViewModel MainViewModelReference { get; set; }
+        DashboardViewModel MainViewModelReference { get; set; } // comment
         public PhoneViewModel(DashboardViewModel vm)
         {
             MainViewModelReference = vm;
