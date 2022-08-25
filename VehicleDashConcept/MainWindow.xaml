@@ -228,7 +228,7 @@
                     </Polygon.Points>
                 </Polygon>
             </Grid>
-            <TextBlock Text="Divide By Zeno" FontSize="56" FontWeight="SemiBold" Foreground="#0affffff" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+            <!--<TextBlock Text="Divide By Zeno" FontSize="56" FontWeight="SemiBold" Foreground="#0affffff" HorizontalAlignment="Center" IsHitTestVisible="False"/>-->
         </Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10" Visibility="Visible">
             <StackPanel Orientation="Vertical">
