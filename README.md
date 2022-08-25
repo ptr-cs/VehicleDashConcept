@@ -3,7 +3,7 @@ Concept user interface (UI) for a vehicle dashboard. The UI was implemented with
 
 ![Vehicle Dashboard Concept Overview](/media/vehicle_dash_concept_overview.gif "Vehicle Dashboard Concept Overview")
 
-This portfolio project is a concept user interface for a vehicle dashboard / infotainment display along with a set of test tools that could be useful during Human-Systems Integration (HSI) tests. The dashboard has five main pages: Home, Driver, Navigation, Media, and Phone. Each page has a touch-friendly layout that also accommodates mouse input. The goals of this project were:
+&ensp;&ensp;&ensp;&ensp;This portfolio project is a concept user interface for a vehicle dashboard / infotainment display along with a set of test tools that could be useful during Human-Systems Integration (HSI) tests. The dashboard has five main pages: Home, Driver, Navigation, Media, and Phone. Each page has a touch-friendly layout that also accommodates mouse input. The goals of this project were:
 
 - to create a realistic UI with interactive controls and
 - to test the controls via simulated data.
