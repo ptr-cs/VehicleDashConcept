@@ -18,6 +18,9 @@ The end result is a neat concept UI that is fun to play with (at least I think i
 - XAML-structured UI with data bindings
 - Test tools to demonstrate and automate UI functionality
 
+# Setup / Running 
+The project includes a Visual Studio solution file (.sln). Opening the solution file within Visual Studio should allow the project to be built and run.
+
 # Screenshots
 ## Home Page
 ![Vehicle Dashboard Concept - Home](/media/vehicle_dash_concept_home.jpg "Vehicle Dashboard Concept - Home") 
