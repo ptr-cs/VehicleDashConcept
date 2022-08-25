@@ -1,7 +1,9 @@
 # VehicleDashConcept
 Concept user interface (UI) for a vehicle dashboard. The UI was implemented with C# using Windows Presentation Foundation (WPF).
 
-This project is a concept user interface for a vehicle dashboard / infotainment display along with a set of test tools that could be useful during Human-Systems Integration (HSI) tests. The dashboard has five main pages: Home, Driver, Navigation, Media, and Phone. Each page has a touch-friendly layout that also accommodates mouse input. The goals of this project were:
+![Vehicle Dashboard Concept Overview](/media/vehicle_dash_concept_overview.gif "Vehicle Dashboard Concept Overview")
+
+This project is a concept user interface for a vehicle dashboard / infotainment display along with a set of test tools that could be useful during Human-Systems Integration (HSI) tests. The dashboard has five main pages: Home, Driver, Navigation, Media, and Phone. Each page has a touch-friendly layout that also accommodates mouse input. The goals of this portfolio project were:
 
 - to create a realistic UI with interactive controls and
 - to test the controls via simulated data.
@@ -15,3 +17,19 @@ The end result is a neat concept UI that is fun to play with (at least I think i
 - Navigation implemented using the System.Windows.Navigation API and Frame control
 - XAML-structured UI with data bindings
 - Test tools to demonstrate and automate UI functionality
+
+# Screenshots
+## Home Page
+![Vehicle Dashboard Concept - Home](/media/vehicle_dash_concept_home.jpg "Vehicle Dashboard Concept - Home") 
+## Driver Page
+![Vehicle Dashboard Concept - Driver](/media/vehicle_dash_concept_driver.JPG "Vehicle Dashboard Concept - Driver")
+## Navigation Page
+![Vehicle Dashboard Concept - Navigation](/media/vehicle_dash_concept_navigation.JPG "Vehicle Dashboard Concept - Navigation") 
+## Weather Page
+![Vehicle Dashboard Concept - Weather](/media/vehicle_dash_concept_weather.JPG "Vehicle Dashboard Concept - Weather") 
+## Media Page
+![Vehicle Dashboard Concept - Media](/media/vehicle_dash_concept_media.JPG "Vehicle Dashboard Concept - Media") 
+## Phone Page
+![Vehicle Dashboard Concept - Phone](/media/vehicle_dash_concept_phone.JPG "Vehicle Dashboard Concept - Phone") 
+## Test Tools Page
+![Vehicle Dashboard Concept - Test](/media/vehicle_dash_concept_test.JPG "Vehicle Dashboard Concept - Test") 
