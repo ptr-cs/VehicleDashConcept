@@ -9,6 +9,8 @@ Concept user interface (UI) for a vehicle dashboard. The UI was implemented with
 - to test the controls via simulated data.
 The end result is a neat concept UI that is fun to play with (at least I think it is 👍) and test changes in state. It would also not be that difficult to inject real data and services into the UI, since the mock-up business logic is loose-coupled to the UI.
 
+For a more detailed explanation of the code, [a blog post about the project is available here](http://www.dividebyzeno.com/vehicle-dashboard-concept.html).
+
 # Features
 
 - Rapid prototype UI/UX desktop application for hardware proof-of-concept
